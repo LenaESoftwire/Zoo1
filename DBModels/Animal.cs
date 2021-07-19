@@ -17,6 +17,6 @@ namespace Zoo.DBModels
         public DateTime DOB { get; set; }
         public DateTime DateAcquired { get; set; }
 
-        public Keeper AnimalKeeper { get; set; }
+        //public Keeper AnimalKeeper { get; set; }
     }
 }
