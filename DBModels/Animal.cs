@@ -16,5 +16,7 @@ namespace Zoo.DBModels
         public Enum Sex { get; set; }
         public DateTime DOB { get; set; }
         public DateTime DateAcquired { get; set; }
+
+        public Keeper AnimalKeeper { get; set; }
     }
 }

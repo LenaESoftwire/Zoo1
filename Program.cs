@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -13,8 +14,8 @@ namespace Zoo
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build();
-            CreateDbIfNotExists(Host);
+            var host = CreateHostBuilder(args).Build();
+            CreateDbIfNotExists(host);
             host.Run();
         }
 
@@ -26,14 +27,14 @@ namespace Zoo
             var context = services.GetRequiredService<ZooDbContext>();
             context.Database.EnsureCreated();
 
-            if (!context.Users.Any())
+            if (!context.Animals.Any())
             {
-                var users = SampleUsers.GetUsers();
-                context.Users.AddRange(users);
+                var animals = SampleAnimals.GetAnimals();
+                context.Animals.AddRange(animals);
                 context.SaveChanges();
 
-                var posts = SamplePosts.GetPosts();
-                context.Posts.AddRange(posts);
+                var keepers = SampleKeepers.GetKeepers();
+                context.Keepers.AddRange(keepers);
                 context.SaveChanges();
 
                 var interactions = SampleInteractions.GetInteractions();
