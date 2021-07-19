@@ -5,18 +5,15 @@ using System.Threading.Tasks;
 
 namespace zoo.DBModels.Enums
 {
-    public class ClassificationEnum
-    {
-            public enum Classification
-            { 
-                Mammal, 
-                Reptile, 
-                Bird, 
-                Insect, 
-                Fish, 
-                Invertebrate 
-            }
-        
 
+    public enum ClassificationEnum
+    {
+        Mammal,
+        Reptile,
+        Bird,
+        Insect,
+        Fish,
+        Invertebrate
     }
+
 }

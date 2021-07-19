@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using zoo;
 using Zoo.Data;
 
 namespace Zoo
@@ -34,23 +35,23 @@ namespace Zoo
                 context.Animals.AddRange(animals);
                 context.SaveChanges();
 
-                var keepers = SampleKeepers.GetKeepers();
-                context.Keepers.AddRange(keepers);
-                context.SaveChanges();
+                //var keepers = SampleKeepers.GetKeepers();
+                //context.Keepers.AddRange(keepers);
+                //context.SaveChanges();
 
-                var interactions = SampleInteractions.GetInteractions();
-                context.Interactions.AddRange(interactions);
-                context.SaveChanges();
+                //var interactions = SampleInteractions.GetInteractions();
+                //context.Interactions.AddRange(interactions);
+                //context.SaveChanges();
             }
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        public static IHostBuilder CreateHostBuilder(string[] args)
+        {
+            return Host.CreateDefaultBuilder(args)
+            .ConfigureWebHostDefaults(webBuilder =>
             {
-                return Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-            webBuilder.UseStartup<Startup>();
-        });
+                webBuilder.UseStartup<Startup>();
+            });
         }
     }
 }

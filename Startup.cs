@@ -28,8 +28,6 @@ namespace zoo
         public static readonly ILoggerFactory
             LoggerFactory = Microsoft.Extensions.Logging.LoggerFactory.Create(builder => { builder.AddConsole(); });
 
-        private static readonly string CORS_POLICY_NAME = "_zooCorsPolicy";
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -39,16 +37,6 @@ namespace zoo
                 options.UseSqlite("Data Source=zoo.db");
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy(CORS_POLICY_NAME, builder =>
-                {
-                    builder
-                        .WithOrigins("http://localhost:3000")
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
-            });
             services.AddControllers();
 
             services.AddSwaggerGen(c =>

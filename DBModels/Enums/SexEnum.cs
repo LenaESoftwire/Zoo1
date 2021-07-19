@@ -5,13 +5,11 @@ using System.Threading.Tasks;
 
 namespace zoo.DBModels.Enums
 {
-    public class SexEnum
+
+    public enum SexEnum
     {
-        public enum Sex
-        {
-            Male,
-            Female,
-            Hermaphrodite
-        }
+        Male,
+        Female,
+        Hermaphrodite
     }
 }
