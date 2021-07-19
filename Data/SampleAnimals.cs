@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using zoo.DBModels.Enums;
 using Zoo.DBModels;
 
@@ -122,20 +121,16 @@ namespace Zoo.Data
         private static Animal CreateRandomAnimal(int index)
         {
             var rnd = new Random();
-            DateTime RandomDay()
-            {
-                DateTime start = new DateTime(1950, 1, 1);
-                int range = (DateTime.Today - start).Days;
-                return start.AddDays(rnd.Next(range));
-            }
-            var dob = RandomDay();
+            var start = new DateTime(1950, 1, 1);
+            var range = (DateTime.Today - start).Days;
+            var dob = start.AddDays(rnd.Next(range));
 
             return new Animal
             {
                 Species = _data[index][0],
                 Name = _data[index][1],
-                Classification = (ClassificationEnum)rnd.Next(5),
-                Sex = (SexEnum)rnd.Next(2),
+                Classification = (Classification)rnd.Next(5),
+                Sex = (Sex)rnd.Next(2),
                 Dob = dob,
                 DateAcquired = dob.AddDays(rnd.Next((DateTime.Today - dob).Days))
             };
