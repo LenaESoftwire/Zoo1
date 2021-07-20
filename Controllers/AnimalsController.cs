@@ -49,9 +49,12 @@ namespace zoo.Controllers
         }
 
         [HttpGet("/species")]
-        public ActionResult<SpeciesListViewModel> SpeciesList()
+        public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] PaginationFilter filter)
         {
-            var species = _animals.GetSpeciesList();
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var species = _animals.GetSpeciesList()
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize);
             return new SpeciesListViewModel(species);
         }
     }
