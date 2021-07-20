@@ -1,7 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.ComponentModel;
-
-namespace zoo.DBModels.Enums
+﻿namespace zoo.DBModels.Enums
 {
     public enum Classification
     {

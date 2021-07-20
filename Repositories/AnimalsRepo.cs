@@ -1,8 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using zoo.Response;
 using Zoo;
 using Zoo.DBModels;
@@ -31,7 +28,7 @@ namespace zoo.Repositories
                 .Include(animal => animal.Species)
                 .ToList();
             var animalsList = animals.Select(animal => new AnimalViewModel(animal));
-            return  animalsList;
+            return animalsList;
         }
 
         public AnimalViewModel GetAnimalById(int id)

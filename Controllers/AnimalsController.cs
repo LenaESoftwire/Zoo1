@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using zoo.Repositories;
 using zoo.Response;
 
@@ -29,12 +26,10 @@ namespace zoo.Controllers
         }
 
         [HttpGet("/animals/{id}")]
-        public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id)
-        {
-            
+        public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id) =>
+
             //_logger.LogInformation($"Found an animal with {id}. It is a {anim");
-            return _animals.GetAnimalById(id);
-        }
+            _animals.GetAnimalById(id);
 
         [HttpPost("/animals/create")]
         public IActionResult AddAnimal(AddAnimalViewModel addAnimalViewModel)

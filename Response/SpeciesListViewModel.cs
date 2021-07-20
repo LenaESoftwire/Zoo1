@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using zoo.DBModels.Enums;
-using Zoo.DBModels;
+﻿using System.Collections.Generic;
 
 namespace zoo.Response
 {
@@ -14,8 +9,8 @@ namespace zoo.Response
         public SpeciesListViewModel(IEnumerable<SpeciesViewModel> species)
         {
             Species = species;
-             
+
         }
-       
+
     }
 }

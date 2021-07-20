@@ -116,10 +116,11 @@ namespace Zoo.Data
             new List<string> { "Bear", "Beadell" }
         };
 
-        public static IEnumerable<Animal> GetAnimals() {
+        public static IEnumerable<Animal> GetAnimals()
+        {
             var species = SampleSpecies.GetSpecies().ToList();
             return Enumerable.Range(0, 100).Select(i => CreateRandomAnimal(i, species));
-    }
+        }
 
         private static Animal CreateRandomAnimal(int index, IList<Species> species)
         {

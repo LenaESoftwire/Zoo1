@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using zoo.DBModels.Enums;
+﻿using zoo.DBModels.Enums;
 using Zoo.DBModels;
 
 namespace zoo.Response
@@ -12,7 +8,7 @@ namespace zoo.Response
         public string SpeciesName { get; set; }
         public Classification Classification { get; set; }
         public int Number { get; set; }
-        
+
 
         public SpeciesViewModel(Species species)
         {
