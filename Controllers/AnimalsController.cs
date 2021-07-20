@@ -20,15 +20,20 @@ namespace zoo.Controllers
             _animals = animals;
         }
 
-      
-
         [HttpGet("/animals")]
         public ActionResult<AnimalListViewModel> AnimalsList([FromQuery] PaginationFilter filter)
         {
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
             var animals = _animals.GetAnimalsList()
-                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-                .Take(validFilter.PageSize);
+                .Skip((filter.PageNumber - 1) * filter.PageSize)
+                .Take(filter.PageSize);
+            return new AnimalListViewModel(animals);
+        }
+
+        [HttpGet("/search")]
+        public ActionResult<AnimalListViewModel> SearchAnimals ( [FromQuery] PaginationFilter pageFilter)
+        {
+            var animals = _animals.GetAnimalsList(pageFilter);
+                
             return new AnimalListViewModel(animals);
         }
 
@@ -49,12 +54,9 @@ namespace zoo.Controllers
         }
 
         [HttpGet("/species")]
-        public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] PaginationFilter filter)
+        public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] PaginationFilter pageFilter)
         {
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var species = _animals.GetSpeciesList()
-                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-                .Take(validFilter.PageSize);
+            var species = _animals.GetSpeciesList(pageFilter);
             return new SpeciesListViewModel(species);
         }
     }

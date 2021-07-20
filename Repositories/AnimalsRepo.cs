@@ -4,15 +4,16 @@ using System.Linq;
 using zoo.Response;
 using Zoo;
 using Zoo.DBModels;
+using Zoo.Filters;
 
 namespace zoo.Repositories
 {
     public interface IAnimalsRepo
     {
-        IEnumerable<AnimalViewModel> GetAnimalsList();
+        IEnumerable<AnimalViewModel> GetAnimalsList(PaginationFilter pageFilter);
         AnimalViewModel GetAnimalById(int id);
         void AddAnimal(AddAnimalViewModel addAnimalViewModel);
-        IEnumerable<SpeciesViewModel> GetSpeciesList();
+        IEnumerable<SpeciesViewModel> GetSpeciesList(PaginationFilter pageFilter);
     }
     public class AnimalsRepo : IAnimalsRepo
     {
@@ -23,10 +24,12 @@ namespace zoo.Repositories
             _context = context;
         }
 
-        public IEnumerable<AnimalViewModel> GetAnimalsList()
+        public IEnumerable<AnimalViewModel> GetAnimalsList(PaginationFilter pageFilter)
         {
             var animals = _context.Animals
                 .Include(animal => animal.Species)
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
+                .Take(pageFilter.PageSize)
                 .ToList();
             var animalsList = animals.Select(animal => new AnimalViewModel(animal));
             return animalsList;
@@ -61,10 +64,12 @@ namespace zoo.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<SpeciesViewModel> GetSpeciesList()
+        public IEnumerable<SpeciesViewModel> GetSpeciesList(PaginationFilter pageFilter)
         {
             var species = _context.Species
                 .Include(species => species.Animals)
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize )
+                .Take(pageFilter.PageSize)
                 .ToList();
             var speciesList = species.Select(animal => new SpeciesViewModel(animal));
             return speciesList;
