@@ -117,21 +117,20 @@ namespace Zoo.Data
         };
 
         public static IEnumerable<Animal> GetAnimals() {
-            var species = new List<Species>();
-            return Enumerable.Range(0, 100).Select(CreateRandomAnimal);
+            var species = SampleSpecies.GetSpecies().ToList();
+            return Enumerable.Range(0, 100).Select(i => CreateRandomAnimal(i, species));
     }
 
-        private static Animal CreateRandomAnimal(int index)
+        private static Animal CreateRandomAnimal(int index, IList<Species> species)
         {
             var rnd = new Random();
             var start = new DateTime(1950, 1, 1);
             var range = (DateTime.Today - start).Days;
             var dob = start.AddDays(rnd.Next(range));
-            
 
             return new Animal
             {
-                SpeciesId = rnd.Next(1, 18),
+                Species = species[rnd.Next(17)],
                 Name = _data[index][1],
                 Sex = (Sex)rnd.Next(2),
                 Dob = dob,

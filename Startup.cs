@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using zoo.Repositories;
 using Zoo;
 
 namespace zoo
@@ -37,7 +38,8 @@ namespace zoo
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "zoo", Version = "v1" });
             });
-            //services.AddTransient<IPostsRepo, PostsRepo>();
+
+            services.AddTransient<IAnimalsRepo, AnimalsRepo>();
             //services.AddTransient<IUsersRepo, UsersRepo>();
         }
 

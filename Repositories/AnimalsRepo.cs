@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,8 @@ namespace zoo.Repositories
 {
     public interface IAnimalsRepo
     {
-        List<AnimalViewModel> AnimalsList();
+        IEnumerable<AnimalViewModel> GetAnimalsList();
+        AnimalViewModel GetAnimalById(int id);
 
         //void AddAnimal (addAnimalViewModel addBookViewModel);
 
@@ -23,6 +25,22 @@ namespace zoo.Repositories
             _context = context;
         }
 
-        List<AnimalViewModel> AnimalsList();
+        public IEnumerable<AnimalViewModel> GetAnimalsList()
+        {
+            var animals = _context.Animals
+                .Include(animal => animal.Species)
+                .ToList();
+            var animalsList = animals.Select(animal => new AnimalViewModel(animal));
+            return  animalsList;
+        }
+
+        public AnimalViewModel GetAnimalById(int id)
+        {
+            var animal = _context.Animals
+                .Include(animal => animal.Species)
+                .Single(animal => animal.Id == id);
+
+            return new AnimalViewModel(animal);
+        }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace zoo.DBModels.Enums
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace zoo.DBModels.Enums
 {
     public enum Classification
     {

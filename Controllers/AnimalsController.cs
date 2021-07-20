@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using zoo.Repositories;
+using zoo.Response;
 
 namespace zoo.Controllers
 {
@@ -21,31 +22,19 @@ namespace zoo.Controllers
         }
 
         [HttpGet]
-        public IActionResult AnimalsList()
+        public ActionResult<AnimalListViewModel> AnimalsList()
         {
+            var animals = _animals.GetAnimalsList();
+            return new AnimalListViewModel(animals);
+        }
 
-            var booksInDb = _bookService.GetBooks();
-            var books = boo)
-    {
-        _bookService = bookService;
-    }
-
-    [HttpGet("/[controller]/{id}")]
-    public IActionResult Book(int id)
-    {
-        var book = _bookService.GetBookById(id);
-        return View(new BookViewModel(book));
-    }
-
-    [HttpGet]
-    public IActionResult Catalogue()
-    {
-
-        var booksInDb = _bookService.GetBooks();
-        var books = booksInDb.Select(book => new BookViewModel(book)).ToList();
-        var catalogue = new CatalogueViewModel
+        [HttpGet("{id}")]
+        public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id)
         {
-            Books = books
-        };
-        return View(catalogue);
+            
+            //_logger.LogInformation($"Found an animal with {id}. It is a {anim");
+            return _animals.GetAnimalById(id);
+        }
     }
+
+}
