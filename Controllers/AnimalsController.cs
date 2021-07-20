@@ -21,19 +21,33 @@ namespace zoo.Controllers
             _animals = animals;
         }
 
-        [HttpGet]
+        [HttpGet("/animals")]
         public ActionResult<AnimalListViewModel> AnimalsList()
         {
             var animals = _animals.GetAnimalsList();
             return new AnimalListViewModel(animals);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("/animals/{id}")]
         public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id)
         {
             
             //_logger.LogInformation($"Found an animal with {id}. It is a {anim");
             return _animals.GetAnimalById(id);
+        }
+
+        [HttpPost("/animals/create")]
+        public IActionResult AddAnimal(AddAnimalViewModel addAnimalViewModel)
+        {
+            _animals.AddAnimal(addAnimalViewModel);
+            return RedirectToAction("AnimalsList");
+        }
+
+        [HttpGet("/species")]
+        public ActionResult<SpeciesListViewModel> SpeciesList()
+        {
+            var species = _animals.GetSpeciesList();
+            return new SpeciesListViewModel(species);
         }
     }
 

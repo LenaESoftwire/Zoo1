@@ -1,8 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\eleevd\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\eleevd\\.nuget\\packages"
+      "C:\\Users\\frasto\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\frasto\\.nuget\\packages"
     ]
   }
 }

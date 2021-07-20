@@ -10,7 +10,6 @@ namespace Zoo.DBModels
         public Sex Sex { get; set; }
         public DateTime Dob { get; set; }
         public DateTime DateAcquired { get; set; }
-
         public Species Species { get; set; }
     }
 }

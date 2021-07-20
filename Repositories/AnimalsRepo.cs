@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using zoo.Response;
 using Zoo;
+using Zoo.DBModels;
 
 namespace zoo.Repositories
 {
@@ -12,9 +13,8 @@ namespace zoo.Repositories
     {
         IEnumerable<AnimalViewModel> GetAnimalsList();
         AnimalViewModel GetAnimalById(int id);
-
-        //void AddAnimal (addAnimalViewModel addBookViewModel);
-
+        void AddAnimal(AddAnimalViewModel addAnimalViewModel);
+        IEnumerable<SpeciesViewModel> GetSpeciesList();
     }
     public class AnimalsRepo : IAnimalsRepo
     {
@@ -41,6 +41,35 @@ namespace zoo.Repositories
                 .Single(animal => animal.Id == id);
 
             return new AnimalViewModel(animal);
+        }
+
+        public void AddAnimal(AddAnimalViewModel addAnimalViewModel)
+        {
+            var species = _context.Species.SingleOrDefault(species => species.SpeciesName == addAnimalViewModel.Species)
+               ?? new Species()
+               {
+                   SpeciesName = addAnimalViewModel.Species,
+                   Classification = addAnimalViewModel.Classification
+               };
+            var newAnimal = new Animal()
+            {
+                Species = species,
+                Name = addAnimalViewModel.Name,
+                Sex = addAnimalViewModel.Sex,
+                Dob = addAnimalViewModel.Dob,
+                DateAcquired = addAnimalViewModel.DateAcquired
+            };
+            _context.Animals.Add(newAnimal);
+            _context.SaveChanges();
+        }
+
+        public IEnumerable<SpeciesViewModel> GetSpeciesList()
+        {
+            var species = _context.Species
+                .Include(species => species.Animals)
+                .ToList();
+            var speciesList = species.Select(animal => new SpeciesViewModel(animal));
+            return speciesList;
         }
     }
 }

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\eleevd\\Training\\Zoo\\zoo.csproj": {}
+    "C:\\Training\\C#\\zoo-lena\\Zoo1\\zoo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\eleevd\\Training\\Zoo\\zoo.csproj": {
+    "C:\\Training\\C#\\zoo-lena\\Zoo1\\zoo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\eleevd\\Training\\Zoo\\zoo.csproj",
+        "projectUniqueName": "C:\\Training\\C#\\zoo-lena\\Zoo1\\zoo.csproj",
         "projectName": "zoo",
-        "projectPath": "C:\\Users\\eleevd\\Training\\Zoo\\zoo.csproj",
-        "packagesPath": "C:\\Users\\eleevd\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\eleevd\\Training\\Zoo\\obj\\",
+        "projectPath": "C:\\Training\\C#\\zoo-lena\\Zoo1\\zoo.csproj",
+        "packagesPath": "C:\\Users\\frasto\\.nuget\\packages\\",
+        "outputPath": "C:\\Training\\C#\\zoo-lena\\Zoo1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\eleevd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\frasto\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -40,6 +40,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[5.0.8, )"
