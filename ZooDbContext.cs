@@ -1,4 +1,5 @@
-﻿using Zoo.DBModels;
+﻿using Microsoft.EntityFrameworkCore;
+using Zoo.DBModels;
 
 namespace Zoo
 {

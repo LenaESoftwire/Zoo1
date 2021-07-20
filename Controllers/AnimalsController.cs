@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 using zoo.Repositories;
 using zoo.Response;
+using Zoo.Filters;
 
 namespace zoo.Controllers
 {
@@ -18,12 +20,20 @@ namespace zoo.Controllers
             _animals = animals;
         }
 
+      
+
         [HttpGet("/animals")]
-        public ActionResult<AnimalListViewModel> AnimalsList()
+        public ActionResult<AnimalListViewModel> AnimalsList([FromQuery] PaginationFilter filter)
         {
-            var animals = _animals.GetAnimalsList();
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var animals = _animals.GetAnimalsList()
+                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                .Take(validFilter.PageSize);
             return new AnimalListViewModel(animals);
         }
+
+        //[HttpGet("/animals/?pageNumber=1&pageSize=10")]
+
 
         [HttpGet("/animals/{id}")]
         public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id) =>
