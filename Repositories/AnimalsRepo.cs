@@ -23,6 +23,6 @@ namespace zoo.Repositories
             _context = context;
         }
 
-
+        List<AnimalViewModel> AnimalsList();
     }
 }

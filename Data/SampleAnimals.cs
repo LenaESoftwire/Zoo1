@@ -116,7 +116,10 @@ namespace Zoo.Data
             new List<string> { "Bear", "Beadell" }
         };
 
-        public static IEnumerable<Animal> GetAnimals() => Enumerable.Range(0, 100).Select(CreateRandomAnimal);
+        public static IEnumerable<Animal> GetAnimals() {
+            var species = new List<Species>();
+            return Enumerable.Range(0, 100).Select(CreateRandomAnimal);
+    }
 
         private static Animal CreateRandomAnimal(int index)
         {
@@ -124,12 +127,12 @@ namespace Zoo.Data
             var start = new DateTime(1950, 1, 1);
             var range = (DateTime.Today - start).Days;
             var dob = start.AddDays(rnd.Next(range));
+            
 
             return new Animal
             {
-                Species = _data[index][0],
+                SpeciesId = rnd.Next(1, 18),
                 Name = _data[index][1],
-                Classification = (Classification)rnd.Next(5),
                 Sex = (Sex)rnd.Next(2),
                 Dob = dob,
                 DateAcquired = dob.AddDays(rnd.Next((DateTime.Today - dob).Days))
