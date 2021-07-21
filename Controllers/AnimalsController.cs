@@ -22,15 +22,16 @@ namespace zoo.Controllers
         [HttpGet("/animals")]
         public ActionResult<AnimalListViewModel> AnimalsList([FromQuery] SearchFilter filter)
         {
-            var animals = _animals.GetAnimalsList(filter)
-                .Skip((filter.PageNumber - 1) * filter.PageSize)
-                .Take(filter.PageSize);
+            filter.Validation();
+            var animals = _animals.GetAnimalsList(filter);
+         
             return new AnimalListViewModel(animals);
         }
 
         [HttpGet("/search")]
         public ActionResult<AnimalListViewModel> SearchAnimals([FromQuery] AnimalsSearchRequest filter)
         {
+            filter.Validation();
             var animals = _animals.SearchAnimals(filter);
             return new AnimalListViewModel(animals);
         }
@@ -52,6 +53,7 @@ namespace zoo.Controllers
         [HttpGet("/species")]
         public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] SearchFilter pageFilter)
         {
+            pageFilter.Validation();
             var species = _animals.GetSpeciesList(pageFilter);
             return new SpeciesListViewModel(species);
         }

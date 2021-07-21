@@ -16,6 +16,7 @@ namespace zoo.Repositories
         IEnumerable<SpeciesViewModel> GetSpeciesList(SearchFilter pageFilter);
         IEnumerable<AnimalViewModel> SearchAnimals(AnimalsSearchRequest search);
     }
+
     public class AnimalsRepo : IAnimalsRepo
     {
         private readonly ZooDbContext _context;
@@ -80,8 +81,8 @@ namespace zoo.Repositories
         {
             return _context.Animals
                 //.OrderByDescending(p => p.PostedAt)
-                .Where(a => search.Name == null || a.Name.ToLower() == search.Name)
-                .Where(a => search.Species == null || a.Species.SpeciesName.ToLower() == search.Species)
+                .Where(a => search.Name == null || a.Name == search.Name)
+                .Where(a => search.Species == null || a.Species.SpeciesName == search.Species)
                 .Include(a => a.Species)
                 .Skip((search.PageNumber - 1) * search.PageSize)
                 .Take(search.PageSize)
