@@ -10,10 +10,11 @@ namespace zoo.Repositories
 {
     public interface IAnimalsRepo
     {
-        IEnumerable<AnimalViewModel> GetAnimalsList(PaginationFilter pageFilter);
+        IEnumerable<AnimalViewModel> GetAnimalsList(SearchFilter pageFilter);
         AnimalViewModel GetAnimalById(int id);
         void AddAnimal(AddAnimalViewModel addAnimalViewModel);
-        IEnumerable<SpeciesViewModel> GetSpeciesList(PaginationFilter pageFilter);
+        IEnumerable<SpeciesViewModel> GetSpeciesList(SearchFilter pageFilter);
+        IEnumerable<AnimalViewModel> SearchAnimals(AnimalsSearchRequest search);
     }
     public class AnimalsRepo : IAnimalsRepo
     {
@@ -24,7 +25,7 @@ namespace zoo.Repositories
             _context = context;
         }
 
-        public IEnumerable<AnimalViewModel> GetAnimalsList(PaginationFilter pageFilter)
+        public IEnumerable<AnimalViewModel> GetAnimalsList(SearchFilter pageFilter)
         {
             var animals = _context.Animals
                 .Include(animal => animal.Species)
@@ -64,7 +65,7 @@ namespace zoo.Repositories
             _context.SaveChanges();
         }
 
-        public IEnumerable<SpeciesViewModel> GetSpeciesList(PaginationFilter pageFilter)
+        public IEnumerable<SpeciesViewModel> GetSpeciesList(SearchFilter pageFilter)
         {
             var species = _context.Species
                 .Include(species => species.Animals)
@@ -73,6 +74,18 @@ namespace zoo.Repositories
                 .ToList();
             var speciesList = species.Select(animal => new SpeciesViewModel(animal));
             return speciesList;
+        }
+
+        public IEnumerable<AnimalViewModel> SearchAnimals(AnimalsSearchRequest search)
+        {
+            return _context.Animals
+                //.OrderByDescending(p => p.PostedAt)
+                .Where(a => search.Name == null || a.Name.ToLower() == search.Name)
+                .Where(a => search.Species == null || a.Species.SpeciesName.ToLower() == search.Species)
+                .Include(a => a.Species)
+                .Skip((search.PageNumber - 1) * search.PageSize)
+                .Take(search.PageSize)
+                .Select(a => new AnimalViewModel(a));
         }
     }
 }

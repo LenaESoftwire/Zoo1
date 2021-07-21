@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using NLog;
 using System.Linq;
 using zoo.Repositories;
 using zoo.Response;
@@ -11,40 +11,36 @@ namespace zoo.Controllers
     [Route("[controller]")]
     public class AnimalsController : ControllerBase
     {
-        private readonly ILogger<AnimalsController> _logger;
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         private readonly IAnimalsRepo _animals;
 
-        public AnimalsController(ILogger<AnimalsController> logger, IAnimalsRepo animals)
+        public AnimalsController(IAnimalsRepo animals)
         {
-            _logger = logger;
             _animals = animals;
         }
 
         [HttpGet("/animals")]
-        public ActionResult<AnimalListViewModel> AnimalsList([FromQuery] PaginationFilter filter)
+        public ActionResult<AnimalListViewModel> AnimalsList([FromQuery] SearchFilter filter)
         {
-            var animals = _animals.GetAnimalsList()
+            var animals = _animals.GetAnimalsList(filter)
                 .Skip((filter.PageNumber - 1) * filter.PageSize)
                 .Take(filter.PageSize);
             return new AnimalListViewModel(animals);
         }
 
         [HttpGet("/search")]
-        public ActionResult<AnimalListViewModel> SearchAnimals ( [FromQuery] PaginationFilter pageFilter)
+        public ActionResult<AnimalListViewModel> SearchAnimals([FromQuery] AnimalsSearchRequest filter)
         {
-            var animals = _animals.GetAnimalsList(pageFilter);
-                
+            var animals = _animals.SearchAnimals(filter);
             return new AnimalListViewModel(animals);
         }
 
-        //[HttpGet("/animals/?pageNumber=1&pageSize=10")]
-
-
         [HttpGet("/animals/{id}")]
-        public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id) =>
-
-            //_logger.LogInformation($"Found an animal with {id}. It is a {anim");
-            _animals.GetAnimalById(id);
+        public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id)
+            {
+            Logger.Info($"Found an animal with {id} id");
+            return _animals.GetAnimalById(id);
+            }
 
         [HttpPost("/animals/create")]
         public IActionResult AddAnimal(AddAnimalViewModel addAnimalViewModel)
@@ -54,7 +50,7 @@ namespace zoo.Controllers
         }
 
         [HttpGet("/species")]
-        public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] PaginationFilter pageFilter)
+        public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] SearchFilter pageFilter)
         {
             var species = _animals.GetSpeciesList(pageFilter);
             return new SpeciesListViewModel(species);

@@ -1,6 +1,9 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 using System.Linq;
 using zoo;
 using Zoo.Data;
@@ -9,8 +12,11 @@ namespace Zoo
 {
     public class Program
     {
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         public static void Main(string[] args)
         {
+            SetupLogging();
+            Logger.Info("Program started");
             var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
             host.Run();
@@ -47,6 +53,19 @@ namespace Zoo
             {
                 webBuilder.UseStartup<Startup>();
             });
+        }
+
+        private static void SetupLogging()
+        {
+            var config = new LoggingConfiguration();
+            var target = new FileTarget
+            {
+                FileName = "../../../Logs/Zoo.log",
+                Layout = @"${longdate} ${level} - ${logger}: ${message}"
+            };
+            config.AddTarget("File Logger", target);
+            config.LoggingRules.Add(new LoggingRule("*", LogLevel.Debug, target));
+            LogManager.Configuration = config;
         }
     }
 }

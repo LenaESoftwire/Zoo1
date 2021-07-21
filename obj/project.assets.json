@@ -546,6 +546,15 @@
           }
         }
       },
+      "NLog/4.7.10": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/NLog.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/NLog.dll": {}
+        }
+      },
       "SQLitePCLRaw.bundle_e_sqlite3/2.0.4": {
         "type": "package",
         "dependencies": {
@@ -1608,6 +1617,39 @@
         "version.txt"
       ]
     },
+    "NLog/4.7.10": {
+      "sha512": "rcegW7kYOCjl7wX0SzsqpPBqnJ51JKi1WkYb6QBVX0Wc5IgH19Pv4t/co+T0s06OS0Ne44xgkY/mHg0PdrmJow==",
+      "type": "package",
+      "path": "nlog/4.7.10",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/monoandroid44/NLog.dll",
+        "lib/monoandroid44/NLog.xml",
+        "lib/net35/NLog.dll",
+        "lib/net35/NLog.xml",
+        "lib/net40-client/NLog.dll",
+        "lib/net40-client/NLog.xml",
+        "lib/net45/NLog.dll",
+        "lib/net45/NLog.xml",
+        "lib/netstandard1.3/NLog.dll",
+        "lib/netstandard1.3/NLog.xml",
+        "lib/netstandard1.5/NLog.dll",
+        "lib/netstandard1.5/NLog.xml",
+        "lib/netstandard2.0/NLog.dll",
+        "lib/netstandard2.0/NLog.xml",
+        "lib/sl4/NLog.dll",
+        "lib/sl4/NLog.xml",
+        "lib/sl5/NLog.dll",
+        "lib/sl5/NLog.xml",
+        "lib/wp8/NLog.dll",
+        "lib/wp8/NLog.xml",
+        "lib/xamarinios10/NLog.dll",
+        "lib/xamarinios10/NLog.xml",
+        "nlog.4.7.10.nupkg.sha512",
+        "nlog.nuspec"
+      ]
+    },
     "SQLitePCLRaw.bundle_e_sqlite3/2.0.4": {
       "sha512": "f5U8Sw0lRym8tTraJ2zm6OqcDrcrEVvcKDtYlKSLs3Ox9SerkwkPXiFXb/uiW0g2tJdUw6oBhsxI/l5DoRxXMg==",
       "type": "package",
@@ -2053,23 +2095,24 @@
       "Microsoft.EntityFrameworkCore.Relational >= 5.0.8",
       "Microsoft.EntityFrameworkCore.Sqlite >= 5.0.8",
       "Microsoft.Extensions.Hosting >= 5.0.0",
+      "NLog >= 4.7.10",
       "Swashbuckle.AspNetCore >= 6.1.4"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\eleevd\\.nuget\\packages\\": {}
+    "C:\\Users\\frasto\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eleevd\\Training\\Zoo\\zoo.csproj",
+      "projectUniqueName": "C:\\Training\\C#\\zoo-lena\\Zoo1\\zoo.csproj",
       "projectName": "zoo",
-      "projectPath": "C:\\Users\\eleevd\\Training\\Zoo\\zoo.csproj",
-      "packagesPath": "C:\\Users\\eleevd\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eleevd\\Training\\Zoo\\obj\\",
+      "projectPath": "C:\\Training\\C#\\zoo-lena\\Zoo1\\zoo.csproj",
+      "packagesPath": "C:\\Users\\frasto\\.nuget\\packages\\",
+      "outputPath": "C:\\Training\\C#\\zoo-lena\\Zoo1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\eleevd\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\frasto\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2110,6 +2153,10 @@
           "Microsoft.Extensions.Hosting": {
             "target": "Package",
             "version": "[5.0.0, )"
+          },
+          "NLog": {
+            "target": "Package",
+            "version": "[4.7.10, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",
