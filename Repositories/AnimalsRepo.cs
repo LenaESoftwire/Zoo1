@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using zoo.Response;
@@ -70,7 +71,7 @@ namespace zoo.Repositories
         {
             var species = _context.Species
                 .Include(species => species.Animals)
-                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize )
+                .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .ToList();
             var speciesList = species.Select(animal => new SpeciesViewModel(animal));
@@ -79,15 +80,42 @@ namespace zoo.Repositories
 
         public IEnumerable<AnimalViewModel> SearchAnimals(AnimalsSearchRequest search)
         {
-            return _context.Animals
-                //.OrderByDescending(p => p.PostedAt)
-                .Where(a => string.IsNullOrEmpty(search.Name) || a.Name.ToLower() == search.Name.ToLower())
-                .Where(a => string.IsNullOrEmpty(search.Species) || a.Species.SpeciesName.ToLower() == search.Species.ToLower())
-                .Where(a => search.Sex == null || search.Sex == (int)a.Sex)
-                .Include(a => a.Species)
-                .Skip((search.PageNumber - 1) * search.PageSize)
-                .Take(search.PageSize)
-                .Select(a => new AnimalViewModel(a));
+            var orderBy = string.IsNullOrEmpty(search.OrderBy) ? "default" : search.OrderBy.ToLower();
+            var query = _context.Animals
+               .Where(a => string.IsNullOrEmpty(search.Name) || a.Name.ToLower() == search.Name.ToLower())
+               .Where(a => string.IsNullOrEmpty(search.Species) || a.Species.SpeciesName.ToLower() == search.Species.ToLower())
+               .Where(a => search.Classification == null || search.Classification == (int)a.Species.Classification)
+               .Where(a => search.Age == null || search.Age == DateTime.Today.Year - a.Dob.Year)
+               .Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date);
+            switch (orderBy)
+            {
+                case "classification":
+                    query = query
+                        .OrderBy(a => a.Species.Classification);
+                    break;
+                case "dob":
+                    query = query
+                        .OrderBy(a => a.Dob);
+                    break;
+                case "name":
+                    query = query
+                        .OrderBy(a => a.Name);
+                    break;
+                case "dateacquired":
+                    query = query
+                        .OrderBy(a => a.DateAcquired);
+                    break;
+                default:
+                    query = query
+                        .OrderBy(a => a.Species.SpeciesName);
+                    break;
+            }
+
+            return query
+               .Include(a => a.Species)
+               .Skip((search.PageNumber - 1) * search.PageSize)
+               .Take(search.PageSize)
+               .Select(a => new AnimalViewModel(a));
         }
     }
 }

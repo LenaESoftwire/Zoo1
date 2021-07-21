@@ -131,7 +131,7 @@ namespace Zoo.Data
 
             return new Animal
             {
-                Species = species[rnd.Next(17)],
+                Species = species[rnd.Next(18)],
                 Name = _data[index][1],
                 Sex = (Sex)rnd.Next(3),
                 Dob = dob,
