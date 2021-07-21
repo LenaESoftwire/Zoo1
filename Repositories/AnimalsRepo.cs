@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace zoo.Repositories
     public class AnimalsRepo : IAnimalsRepo
     {
         private readonly ZooDbContext _context;
-
+        private static readonly ILogger Logger = LogManager.GetCurrentClassLogger();
         public AnimalsRepo(ZooDbContext context)
         {
             _context = context;
@@ -29,6 +30,7 @@ namespace zoo.Repositories
 
         public IEnumerable<AnimalViewModel> GetAnimalsList(SearchFilter pageFilter)
         {
+            Logger.Info("Getting a list of animals ordered by Id");
             var animals = _context.Animals
                 .Include(animal => animal.Species)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
@@ -40,10 +42,14 @@ namespace zoo.Repositories
 
         public AnimalViewModel GetAnimalById(int id)
         {
+            Logger.Info($"Getting animal with ID: {id}");
             var animal = _context.Animals
                 .Include(animal => animal.Species)
                 .Single(animal => animal.Id == id);
-
+            if (animal == null)
+            {
+                Logger.Error($"There is no animal with Id: {id} in our zoo");
+            }
             return new AnimalViewModel(animal);
         }
 

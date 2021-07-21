@@ -33,6 +33,7 @@ namespace zoo.Controllers
         {
             filter.Validation();
             var animals = _animals.SearchAnimals(filter);
+
             return new AnimalListViewModel(animals);
         }
 
