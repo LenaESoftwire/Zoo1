@@ -40,8 +40,19 @@ namespace zoo.Controllers
         [HttpGet("/animals/{id}")]
         public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id)
             {
-            Logger.Info($"Found an animal with {id} id");
-            return _animals.GetAnimalById(id);
+            var animal = new AnimalViewModel();
+            try
+            {
+                animal = _animals.GetAnimalById(id);
+            }
+            catch
+            {
+                Logger.Error($"There is no animal with Id: {id} in our zoo");
+                return new NotFoundResult();
+            }
+            
+            Logger.Info($"Getting an animal with {id} id");
+            return animal;
             }
 
         [HttpPost("/animals/create")]

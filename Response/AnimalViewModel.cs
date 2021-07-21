@@ -13,6 +13,8 @@ namespace zoo.Response
         public DateTime Dob { get; set; }
         public DateTime DateAcquired { get; set; }
 
+        public AnimalViewModel() { }
+
         public AnimalViewModel(Animal animal)
         {
             Species = animal.Species.SpeciesName;

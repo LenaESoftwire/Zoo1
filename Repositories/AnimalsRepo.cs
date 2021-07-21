@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -42,15 +43,10 @@ namespace zoo.Repositories
 
         public AnimalViewModel GetAnimalById(int id)
         {
-            Logger.Info($"Getting animal with ID: {id}");
-            var animal = _context.Animals
-                .Include(animal => animal.Species)
-                .Single(animal => animal.Id == id);
-            if (animal == null)
-            {
-                Logger.Error($"There is no animal with Id: {id} in our zoo");
-            }
-            return new AnimalViewModel(animal);
+            
+            return new AnimalViewModel(_context.Animals
+                    .Include(animal => animal.Species)
+                    .Single(animal => animal.Id == id));
         }
 
         public void AddAnimal(AddAnimalViewModel addAnimalViewModel)
