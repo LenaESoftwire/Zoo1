@@ -81,8 +81,9 @@ namespace zoo.Repositories
         {
             return _context.Animals
                 //.OrderByDescending(p => p.PostedAt)
-                .Where(a => search.Name == null || a.Name == search.Name)
-                .Where(a => search.Species == null || a.Species.SpeciesName == search.Species)
+                .Where(a => string.IsNullOrEmpty(search.Name) || a.Name.ToLower() == search.Name.ToLower())
+                .Where(a => string.IsNullOrEmpty(search.Species) || a.Species.SpeciesName.ToLower() == search.Species.ToLower())
+                .Where(a => search.Sex == null || search.Sex == (int)a.Sex)
                 .Include(a => a.Species)
                 .Skip((search.PageNumber - 1) * search.PageSize)
                 .Take(search.PageSize)

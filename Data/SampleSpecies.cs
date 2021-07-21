@@ -29,7 +29,7 @@ namespace Zoo.Data
             new List<string> { "Flamingo", "2" },
         };
 
-        public static IEnumerable<Species> GetSpecies() => Enumerable.Range(0, 17).Select(CreateRandomSpecies);
+        public static IEnumerable<Species> GetSpecies() => Enumerable.Range(0, 18).Select(CreateRandomSpecies);
 
         private static Species CreateRandomSpecies(int index)
         {

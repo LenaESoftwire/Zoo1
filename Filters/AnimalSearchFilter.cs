@@ -4,6 +4,7 @@ namespace Zoo.Filters
     {
         public string? Name { get; set; }
         public string? Species { get; set; }
+        public int? Sex { get; set; }
     }
     
 }

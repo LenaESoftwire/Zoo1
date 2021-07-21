@@ -133,7 +133,7 @@ namespace Zoo.Data
             {
                 Species = species[rnd.Next(17)],
                 Name = _data[index][1],
-                Sex = (Sex)rnd.Next(2),
+                Sex = (Sex)rnd.Next(3),
                 Dob = dob,
                 DateAcquired = dob.AddDays(rnd.Next((DateTime.Today - dob).Days))
             };
