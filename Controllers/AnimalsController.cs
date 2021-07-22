@@ -32,9 +32,23 @@ namespace zoo.Controllers
         public ActionResult<AnimalListViewModel> SearchAnimals([FromQuery] AnimalsSearchRequest filter)
         {
             filter.Validation();
-            var animals = _animals.SearchAnimals(filter);
+            if (!ModelState.IsValid)
+            {
+                Logger.Error($"Add animal request is not valid");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var animals = _animals.SearchAnimals(filter);
 
-            return new AnimalListViewModel(animals);
+                return animals.Any() ? new AnimalListViewModel(animals) : new NotFoundResult();
+            }
+            catch
+            {
+                Logger.Error($"There is no such animal in our zoo");
+                return new NotFoundResult();
+            }
+
         }
 
         [HttpGet("/animals/{id}")]

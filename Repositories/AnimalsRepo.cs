@@ -72,7 +72,7 @@ namespace zoo.Repositories
                 throw new Exception($"Animal can't be added as {enclosure.Name} enclosure is full");
             }
 
-            var species = _context.Species.SingleOrDefault(species => species.SpeciesName == addAnimalViewModel.Species)
+            var species = _context.Species.SingleOrDefault(species => species.SpeciesName.ToLower() == addAnimalViewModel.Species.ToLower())
                ?? new Species()
                {
                    SpeciesName = addAnimalViewModel.Species,
