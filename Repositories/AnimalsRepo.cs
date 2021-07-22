@@ -34,6 +34,7 @@ namespace zoo.Repositories
             Logger.Info("Getting a list of animals ordered by Id");
             var animals = _context.Animals
                 .Include(animal => animal.Species)
+                .Include(animal => animal.Enclosure)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .ToList();
@@ -45,17 +46,28 @@ namespace zoo.Repositories
         {
             return new AnimalViewModel(_context.Animals
                     .Include(animal => animal.Species)
+                    .Include(animal => animal.Enclosure)
                     .Single(animal => animal.Id == id));
         }
 
         public void AddAnimal(AddAnimalViewModel addAnimalViewModel)
         {
             var classification = addAnimalViewModel.Classification;
+            var enclosure = _context.Enclosures
+                .Include(enclosure => enclosure.Animals)
+                .SingleOrDefault(enclosure => enclosure.Name == addAnimalViewModel.Enclosure);
 
             if (addAnimalViewModel.Dob>DateTime.Now || addAnimalViewModel.DateAcquired>DateTime.Now 
                 || addAnimalViewModel.DateAcquired<addAnimalViewModel.Dob)
             {
-                throw new Exception("Date of birth and date of aquireiness must not be later than today, date of birth must not be later than date of aquireiness");
+                Logger.Error("Date of birth and date acquired must not be later than today, date of birth must not be later than date acquired");
+                throw new Exception("Date of birth and date acquired must not be later than today, date of birth must not be later than date acquired");
+            }
+
+            if (enclosure.Capacity <= enclosure.Animals.Count)
+            {
+                Logger.Error($"Animal can't be added as {enclosure.Name} enclosure is full");
+                throw new Exception($"Animal can't be added as {enclosure.Name} enclosure is full");
             }
 
             var species = _context.Species.SingleOrDefault(species => species.SpeciesName == addAnimalViewModel.Species)
@@ -70,7 +82,8 @@ namespace zoo.Repositories
                 Name = addAnimalViewModel.Name,
                 Sex = addAnimalViewModel.Sex,
                 Dob = addAnimalViewModel.Dob,
-                DateAcquired = addAnimalViewModel.DateAcquired
+                DateAcquired = addAnimalViewModel.DateAcquired,
+                Enclosure = enclosure
             };
             _context.Animals.Add(newAnimal);
             _context.SaveChanges();
@@ -80,6 +93,7 @@ namespace zoo.Repositories
         {
             var species = _context.Species
                 .Include(species => species.Animals)
+                .ThenInclude(animal => animal.Enclosure)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .ToList();
@@ -106,6 +120,7 @@ namespace zoo.Repositories
             };
             return query
                .Include(a => a.Species)
+               .Include(a => a.Enclosure)
                .Skip((search.PageNumber - 1) * search.PageSize)
                .Take(search.PageSize)
                .Select(a => new AnimalViewModel(a));

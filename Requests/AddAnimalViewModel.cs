@@ -28,5 +28,9 @@ namespace zoo.Request
         [DataType(DataType.Date, ErrorMessage = "This field is recieving date format: dd/mm/yyyy")]
         [Display(Name = "Date Acquired")]
         public DateTime DateAcquired { get; set; }
+        [Required(ErrorMessage = "Enclosure is required")]
+        [Range(0, 4, ErrorMessage = "Enclosure must be between 0 and 4")]
+        [Display(Name = "Enclosure")]
+        public EnclosureName Enclosure { get; set; }
     }
 }

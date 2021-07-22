@@ -119,10 +119,11 @@ namespace Zoo.Data
         public static IEnumerable<Animal> GetAnimals()
         {
             var species = SampleSpecies.GetSpecies().ToList();
-            return Enumerable.Range(0, 100).Select(i => CreateRandomAnimal(i, species));
+            var enclosures = SampleEnclosures.GetEnclosures().ToList();
+            return Enumerable.Range(0, _data.Count - 1).Select(i => CreateRandomAnimal(i, species, enclosures));
         }
 
-        private static Animal CreateRandomAnimal(int index, IList<Species> species)
+        private static Animal CreateRandomAnimal(int index, IList<Species> species, IList<Enclosure> enclosures)
         {
             var rnd = new Random();
             var start = new DateTime(1950, 1, 1);
@@ -135,7 +136,8 @@ namespace Zoo.Data
                 Name = _data[index][1],
                 Sex = (Sex)rnd.Next(3),
                 Dob = dob,
-                DateAcquired = dob.AddDays(rnd.Next((DateTime.Today - dob).Days))
+                DateAcquired = dob.AddDays(rnd.Next((DateTime.Today - dob).Days)),
+                Enclosure = enclosures[rnd.Next(5)]
             };
         }
     }

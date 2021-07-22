@@ -12,6 +12,7 @@ namespace zoo.Request
         public Sex Sex { get; set; }
         public DateTime Dob { get; set; }
         public DateTime DateAcquired { get; set; }
+        public EnclosureName Enclosure { get; set; }
 
         public AnimalViewModel() { }
 
@@ -23,6 +24,7 @@ namespace zoo.Request
             Sex = animal.Sex;
             Dob = animal.Dob;
             DateAcquired = animal.DateAcquired;
+            Enclosure = animal.Enclosure.Name;
         }
     }
 }

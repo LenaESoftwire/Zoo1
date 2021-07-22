@@ -59,8 +59,10 @@ namespace zoo.Controllers
         public IActionResult AddAnimal(AddAnimalViewModel addAnimalViewModel)
         {
             if (!ModelState.IsValid)
-
+            {
+                Logger.Error($"Add animal request is not valid");
                 return BadRequest(ModelState);
+            }
             try
             {
                 _animals.AddAnimal(addAnimalViewModel);
@@ -69,20 +71,15 @@ namespace zoo.Controllers
             catch
             {
                 return BadRequest();
-
             }
+        }
 
-
+        [HttpGet("/species")]
+        public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] SearchFilter pageFilter)
+        {
+            pageFilter.Validation();
+            var species = _animals.GetSpeciesList(pageFilter);
+            return new SpeciesListViewModel(species);
         }
     }
-
-    [HttpGet("/species")]
-    public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] SearchFilter pageFilter)
-    {
-        pageFilter.Validation();
-        var species = _animals.GetSpeciesList(pageFilter);
-        return new SpeciesListViewModel(species);
-    }
-}
-
 }

@@ -9,5 +9,6 @@ namespace Zoo
         public DbSet<Animal> Animals { get; set; }
         public DbSet<Species> Species { get; set; }
         public DbSet<Keeper> Keepers { get; set; }
+        public DbSet<Enclosure> Enclosures { get; set; }
     }
 }
