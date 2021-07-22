@@ -120,15 +120,20 @@ namespace Zoo.Data
         {
             var species = SampleSpecies.GetSpecies().ToList();
             var enclosures = SampleEnclosures.GetEnclosures().ToList();
-            return Enumerable.Range(0, _data.Count - 1).Select(i => CreateRandomAnimal(i, species, enclosures));
+            var keepers = SampleKeepers.GetKeeper().ToList();
+            return Enumerable.Range(0, _data.Count - 1).Select(i => CreateRandomAnimal(i, species, enclosures, keepers));
         }
 
-        private static Animal CreateRandomAnimal(int index, IList<Species> species, IList<Enclosure> enclosures)
+        private static Animal CreateRandomAnimal(int index, IList<Species> species, IList<Enclosure> enclosures, IList<Keeper> keepers)
         {
             var rnd = new Random();
             var start = new DateTime(1950, 1, 1);
             var range = (DateTime.Today - start).Days;
             var dob = start.AddDays(rnd.Next(range));
+            if (!keepers[index % 10].Enclosures.Contains(enclosures[index % 5]))
+            {
+                keepers[index % 10].Enclosures.Add(enclosures[index % 5]);
+            }
 
             return new Animal
             {
@@ -137,7 +142,8 @@ namespace Zoo.Data
                 Sex = (Sex)rnd.Next(3),
                 Dob = dob,
                 DateAcquired = dob.AddDays(rnd.Next((DateTime.Today - dob).Days)),
-                Enclosure = enclosures[rnd.Next(5)]
+                Enclosure = enclosures[index % 5],
+                Keeper = keepers[index % 10]
             };
         }
     }

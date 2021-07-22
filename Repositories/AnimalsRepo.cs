@@ -35,6 +35,7 @@ namespace zoo.Repositories
             var animals = _context.Animals
                 .Include(animal => animal.Species)
                 .Include(animal => animal.Enclosure)
+                .Include(a => a.Keeper)
                 .OrderBy(animal => animal.Enclosure.Name)
                 .ThenBy(animal => animal.Name)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
@@ -49,6 +50,7 @@ namespace zoo.Repositories
             return new AnimalViewModel(_context.Animals
                     .Include(animal => animal.Species)
                     .Include(animal => animal.Enclosure)
+                    .Include(a => a.Keeper)
                     .Single(animal => animal.Id == id));
         }
 
@@ -57,6 +59,7 @@ namespace zoo.Repositories
             var classification = addAnimalViewModel.Classification;
             var enclosure = _context.Enclosures
                 .Include(enclosure => enclosure.Animals)
+                //.Include(a => a.Keeper)
                 .SingleOrDefault(enclosure => enclosure.Name == addAnimalViewModel.Enclosure);
 
             if (addAnimalViewModel.Dob>DateTime.Now || addAnimalViewModel.DateAcquired>DateTime.Now 
@@ -72,10 +75,10 @@ namespace zoo.Repositories
                 throw new Exception($"Animal can't be added as {enclosure.Name} enclosure is full");
             }
 
-            var species = _context.Species.SingleOrDefault(species => species.SpeciesName.ToLower() == addAnimalViewModel.Species.ToLower())
+            var species = _context.Species.SingleOrDefault(species => species.Name.ToLower() == addAnimalViewModel.Species.ToLower())
                ?? new Species()
                {
-                   SpeciesName = addAnimalViewModel.Species,
+                   Name = addAnimalViewModel.Species,
                    Classification = addAnimalViewModel.Classification
                };
             var newAnimal = new Animal()
@@ -96,6 +99,7 @@ namespace zoo.Repositories
             var species = _context.Species
                 .Include(species => species.Animals)
                 .ThenInclude(animal => animal.Enclosure)
+                .ThenInclude(a => a.Keeper)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .ToList();
@@ -108,10 +112,11 @@ namespace zoo.Repositories
             var orderBy = string.IsNullOrEmpty(search.OrderBy) ? "default" : search.OrderBy.ToLower();
             var query = _context.Animals
                .Where(a => string.IsNullOrEmpty(search.Name) || a.Name.ToLower() == search.Name.ToLower())
-               .Where(a => string.IsNullOrEmpty(search.Species) || a.Species.SpeciesName.ToLower() == search.Species.ToLower())
+               .Where(a => string.IsNullOrEmpty(search.Species) || a.Species.Name.ToLower() == search.Species.ToLower())
                .Where(a => search.Classification == null || search.Classification == (int)a.Species.Classification)
                .Where(a => search.Age == null || search.Age == DateTime.Today.Year - a.Dob.Year)
                .Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date)
+               //.Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date)
                .Where(a => search.Enclosure == null || search.Enclosure == (int)a.Enclosure.Name);
 
             query = orderBy switch
@@ -121,11 +126,12 @@ namespace zoo.Repositories
                 "name" => query.OrderBy(a => a.Name),
                 "dateacquired" => query.OrderBy(a => a.DateAcquired),
                 "enclosure" => query.OrderBy(a => a.Enclosure.Name),
-                _ => query.OrderBy(a => a.Species.SpeciesName),
+                _ => query.OrderBy(a => a.Species.Name),
             };
             return query
                .Include(a => a.Species)
                .Include(a => a.Enclosure)
+               .Include(a => a.Keeper)
                .Skip((search.PageNumber - 1) * search.PageSize)
                .Take(search.PageSize)
                .Select(a => new AnimalViewModel(a));

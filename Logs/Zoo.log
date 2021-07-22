@@ -1,55 +1,12 @@
-2021-07-21 10:17:42.1553 Info - Zoo.Program: Program started
-2021-07-21 10:18:05.6883 Info - zoo.Controllers.AnimalsController: Found an animal with 5 id
-2021-07-21 11:01:04.4777 Info - Zoo.Program: Program started
-2021-07-21 11:03:39.3965 Info - Zoo.Program: Program started
-2021-07-21 11:17:54.6657 Info - Zoo.Program: Program started
-2021-07-21 11:26:29.8817 Info - Zoo.Program: Program started
-2021-07-21 11:45:13.9253 Info - Zoo.Program: Program started
-2021-07-21 11:50:40.4489 Info - Zoo.Program: Program started
-2021-07-21 12:02:39.2584 Info - Zoo.Program: Program started
-2021-07-21 12:05:11.7782 Info - Zoo.Program: Program started
-2021-07-21 12:15:21.3042 Info - Zoo.Program: Program started
-2021-07-21 12:29:29.4442 Info - Zoo.Program: Program started
-2021-07-21 12:32:27.7299 Info - Zoo.Program: Program started
-2021-07-21 12:35:32.8378 Info - Zoo.Program: Program started
-2021-07-21 13:50:50.0095 Info - Zoo.Program: Program started
-2021-07-21 13:57:28.9850 Info - Zoo.Program: Program started
-2021-07-21 14:14:36.7721 Info - Zoo.Program: Program started
-2021-07-21 14:16:59.9393 Info - Zoo.Program: Program started
-2021-07-21 14:42:15.8397 Info - Zoo.Program: Program started
-2021-07-21 15:17:01.7465 Info - Zoo.Program: Program started
-2021-07-21 15:17:21.1124 Info - zoo.Repositories.AnimalsRepo: Getting animal with ID: 120
-2021-07-21 15:35:05.7427 Info - Zoo.Program: Program started
-2021-07-21 15:35:23.9410 Info - zoo.Controllers.AnimalsController: Getting an animal with 9 id
-2021-07-21 15:35:32.3988 Error - zoo.Controllers.AnimalsController: There is no animal with Id: 120 in our zoo
-2021-07-21 15:42:14.2792 Info - Zoo.Program: Program started
-2021-07-21 15:43:00.4787 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-21 21:19:48.7714 Info - Zoo.Program: Program started
-2021-07-22 10:12:23.2910 Info - Zoo.Program: Program started
-2021-07-22 10:19:00.4769 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 10:27:37.9060 Info - Zoo.Program: Program started
-2021-07-22 10:43:37.0187 Info - Zoo.Program: Program started
-2021-07-22 10:44:47.2131 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 11:47:34.0587 Info - Zoo.Program: Program started
-2021-07-22 11:48:03.2304 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 11:49:44.8661 Info - Zoo.Program: Program started
-2021-07-22 11:50:18.7250 Info - Zoo.Program: Program started
-2021-07-22 11:52:43.2355 Info - Zoo.Program: Program started
-2021-07-22 11:58:29.1531 Info - Zoo.Program: Program started
-2021-07-22 12:00:24.3301 Info - Zoo.Program: Program started
-2021-07-22 12:03:18.9758 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 12:05:55.1736 Info - Zoo.Program: Program started
-2021-07-22 12:06:25.2389 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 12:08:29.6610 Info - Zoo.Program: Program started
-2021-07-22 12:12:29.3171 Info - Zoo.Program: Program started
-2021-07-22 12:13:08.2206 Error - zoo.Repositories.AnimalsRepo: Animal can't be added as Giraffe enclosure is full
-2021-07-22 12:13:30.6523 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 12:22:35.0886 Info - Zoo.Program: Program started
-2021-07-22 12:23:02.7397 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 12:25:29.6695 Info - Zoo.Program: Program started
-2021-07-22 12:30:10.5104 Info - Zoo.Program: Program started
-2021-07-22 12:31:09.5694 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 12:32:29.2940 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
-2021-07-22 13:51:25.2664 Info - Zoo.Program: Program started
-2021-07-22 13:56:05.2434 Info - Zoo.Program: Program started
-2021-07-22 13:59:58.4132 Info - Zoo.Program: Program started
+2021-07-22 14:43:41.6463 Info - Zoo.Program: Program started
+2021-07-22 14:46:02.7539 Info - Zoo.Program: Program started
+2021-07-22 14:51:50.4409 Info - Zoo.Program: Program started
+2021-07-22 14:52:04.1464 Info - Zoo.Program: Program started
+2021-07-22 14:52:26.7471 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 14:53:59.8590 Info - Zoo.Program: Program started
+2021-07-22 14:54:17.3101 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 14:58:07.8941 Info - Zoo.Program: Program started
+2021-07-22 14:58:26.5045 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 14:59:45.2923 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 15:00:22.5508 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 15:00:50.1578 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id

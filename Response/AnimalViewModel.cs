@@ -13,18 +13,20 @@ namespace zoo.Request
         public DateTime Dob { get; set; }
         public DateTime DateAcquired { get; set; }
         public EnclosureName Enclosure { get; set; }
+        public string Keeper { get; set; }
 
         public AnimalViewModel() { }
 
         public AnimalViewModel(Animal animal)
         {
-            Species = animal.Species.SpeciesName;
+            Species = animal.Species.Name;
             Classification = animal.Species.Classification;
             Name = animal.Name;
             Sex = animal.Sex;
             Dob = animal.Dob;
             DateAcquired = animal.DateAcquired;
             Enclosure = animal.Enclosure.Name;
+            Keeper = animal.Keeper.Name;
         }
     }
 }

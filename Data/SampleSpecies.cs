@@ -35,7 +35,7 @@ namespace Zoo.Data
         {
             return new Species
             {
-                SpeciesName = _data[index][0],
+                Name = _data[index][0],
                 Classification = (Classification)int.Parse(_data[index][1])
             };
         }

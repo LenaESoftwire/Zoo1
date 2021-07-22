@@ -12,7 +12,7 @@ namespace zoo.Request
 
         public SpeciesViewModel(Species species)
         {
-            SpeciesName = species.SpeciesName;
+            SpeciesName = species.Name;
             Classification = species.Classification;
             Number = species.Animals.Count;
         }
