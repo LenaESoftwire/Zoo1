@@ -35,6 +35,8 @@ namespace zoo.Repositories
             var animals = _context.Animals
                 .Include(animal => animal.Species)
                 .Include(animal => animal.Enclosure)
+                .OrderBy(animal => animal.Enclosure.Name)
+                .ThenBy(animal => animal.Name)
                 .Skip((pageFilter.PageNumber - 1) * pageFilter.PageSize)
                 .Take(pageFilter.PageSize)
                 .ToList();
@@ -109,13 +111,16 @@ namespace zoo.Repositories
                .Where(a => string.IsNullOrEmpty(search.Species) || a.Species.SpeciesName.ToLower() == search.Species.ToLower())
                .Where(a => search.Classification == null || search.Classification == (int)a.Species.Classification)
                .Where(a => search.Age == null || search.Age == DateTime.Today.Year - a.Dob.Year)
-               .Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date);
+               .Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date)
+               .Where(a => search.Enclosure == null || search.Enclosure == (int)a.Enclosure.Name);
+
             query = orderBy switch
             {
                 "classification" => query.OrderBy(a => a.Species.Classification),
                 "dob" => query.OrderBy(a => a.Dob),
                 "name" => query.OrderBy(a => a.Name),
                 "dateacquired" => query.OrderBy(a => a.DateAcquired),
+                "enclosure" => query.OrderBy(a => a.Enclosure.Name),
                 _ => query.OrderBy(a => a.Species.SpeciesName),
             };
             return query

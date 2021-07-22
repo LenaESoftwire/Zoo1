@@ -44,3 +44,9 @@
 2021-07-22 12:12:29.3171 Info - Zoo.Program: Program started
 2021-07-22 12:13:08.2206 Error - zoo.Repositories.AnimalsRepo: Animal can't be added as Giraffe enclosure is full
 2021-07-22 12:13:30.6523 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 12:22:35.0886 Info - Zoo.Program: Program started
+2021-07-22 12:23:02.7397 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 12:25:29.6695 Info - Zoo.Program: Program started
+2021-07-22 12:30:10.5104 Info - Zoo.Program: Program started
+2021-07-22 12:31:09.5694 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 12:32:29.2940 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id

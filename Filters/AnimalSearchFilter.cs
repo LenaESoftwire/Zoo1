@@ -10,6 +10,7 @@ namespace Zoo.Filters
         public int? Age { get; set; }
         public DateTime? DateAcquired { get; set; }
         public string? OrderBy { get; set; }
+        public int? Enclosure { get; set; }
     }
     
 }
