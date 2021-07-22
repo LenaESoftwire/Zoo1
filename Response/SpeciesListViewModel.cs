@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace zoo.Response
+namespace zoo.Request
 {
     public class SpeciesListViewModel
     {

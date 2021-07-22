@@ -1,7 +1,7 @@
 ﻿using zoo.DBModels.Enums;
 using Zoo.DBModels;
 
-namespace zoo.Response
+namespace zoo.Request
 {
     public class SpeciesViewModel
     {

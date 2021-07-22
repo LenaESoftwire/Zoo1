@@ -22,3 +22,11 @@
 2021-07-21 15:35:05.7427 Info - Zoo.Program: Program started
 2021-07-21 15:35:23.9410 Info - zoo.Controllers.AnimalsController: Getting an animal with 9 id
 2021-07-21 15:35:32.3988 Error - zoo.Controllers.AnimalsController: There is no animal with Id: 120 in our zoo
+2021-07-21 15:42:14.2792 Info - Zoo.Program: Program started
+2021-07-21 15:43:00.4787 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-21 21:19:48.7714 Info - Zoo.Program: Program started
+2021-07-22 10:12:23.2910 Info - Zoo.Program: Program started
+2021-07-22 10:19:00.4769 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 10:27:37.9060 Info - Zoo.Program: Program started
+2021-07-22 10:43:37.0187 Info - Zoo.Program: Program started
+2021-07-22 10:44:47.2131 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id

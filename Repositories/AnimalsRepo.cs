@@ -4,7 +4,7 @@ using NLog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using zoo.Response;
+using zoo.Request;
 using Zoo;
 using Zoo.DBModels;
 using Zoo.Filters;
@@ -43,7 +43,6 @@ namespace zoo.Repositories
 
         public AnimalViewModel GetAnimalById(int id)
         {
-            
             return new AnimalViewModel(_context.Animals
                     .Include(animal => animal.Species)
                     .Single(animal => animal.Id == id));
@@ -51,6 +50,14 @@ namespace zoo.Repositories
 
         public void AddAnimal(AddAnimalViewModel addAnimalViewModel)
         {
+            var classification = addAnimalViewModel.Classification;
+
+            if (addAnimalViewModel.Dob>DateTime.Now || addAnimalViewModel.DateAcquired>DateTime.Now 
+                || addAnimalViewModel.DateAcquired<addAnimalViewModel.Dob)
+            {
+                throw new Exception("Date of birth and date of aquireiness must not be later than today, date of birth must not be later than date of aquireiness");
+            }
+
             var species = _context.Species.SingleOrDefault(species => species.SpeciesName == addAnimalViewModel.Species)
                ?? new Species()
                {
@@ -89,30 +96,14 @@ namespace zoo.Repositories
                .Where(a => search.Classification == null || search.Classification == (int)a.Species.Classification)
                .Where(a => search.Age == null || search.Age == DateTime.Today.Year - a.Dob.Year)
                .Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date);
-            switch (orderBy)
+            query = orderBy switch
             {
-                case "classification":
-                    query = query
-                        .OrderBy(a => a.Species.Classification);
-                    break;
-                case "dob":
-                    query = query
-                        .OrderBy(a => a.Dob);
-                    break;
-                case "name":
-                    query = query
-                        .OrderBy(a => a.Name);
-                    break;
-                case "dateacquired":
-                    query = query
-                        .OrderBy(a => a.DateAcquired);
-                    break;
-                default:
-                    query = query
-                        .OrderBy(a => a.Species.SpeciesName);
-                    break;
-            }
-
+                "classification" => query.OrderBy(a => a.Species.Classification),
+                "dob" => query.OrderBy(a => a.Dob),
+                "name" => query.OrderBy(a => a.Name),
+                "dateacquired" => query.OrderBy(a => a.DateAcquired),
+                _ => query.OrderBy(a => a.Species.SpeciesName),
+            };
             return query
                .Include(a => a.Species)
                .Skip((search.PageNumber - 1) * search.PageSize)

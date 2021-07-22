@@ -2,7 +2,7 @@
 using NLog;
 using System.Linq;
 using zoo.Repositories;
-using zoo.Response;
+using zoo.Request;
 using Zoo.Filters;
 
 namespace zoo.Controllers
@@ -24,7 +24,7 @@ namespace zoo.Controllers
         {
             filter.Validation();
             var animals = _animals.GetAnimalsList(filter);
-         
+
             return new AnimalListViewModel(animals);
         }
 
@@ -39,7 +39,7 @@ namespace zoo.Controllers
 
         [HttpGet("/animals/{id}")]
         public ActionResult<AnimalViewModel> AnimalById([FromRoute] int id)
-            {
+        {
             var animal = new AnimalViewModel();
             try
             {
@@ -50,25 +50,39 @@ namespace zoo.Controllers
                 Logger.Error($"There is no animal with Id: {id} in our zoo");
                 return new NotFoundResult();
             }
-            
+
             Logger.Info($"Getting an animal with {id} id");
             return animal;
-            }
+        }
 
         [HttpPost("/animals/create")]
         public IActionResult AddAnimal(AddAnimalViewModel addAnimalViewModel)
         {
-            _animals.AddAnimal(addAnimalViewModel);
-            return RedirectToAction("AnimalsList");
-        }
+            if (!ModelState.IsValid)
 
-        [HttpGet("/species")]
-        public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] SearchFilter pageFilter)
-        {
-            pageFilter.Validation();
-            var species = _animals.GetSpeciesList(pageFilter);
-            return new SpeciesListViewModel(species);
+                return BadRequest(ModelState);
+            try
+            {
+                _animals.AddAnimal(addAnimalViewModel);
+                return RedirectToAction("AnimalsList");
+            }
+            catch
+            {
+                return BadRequest();
+
+            }
+
+
         }
     }
+
+    [HttpGet("/species")]
+    public ActionResult<SpeciesListViewModel> SpeciesList([FromQuery] SearchFilter pageFilter)
+    {
+        pageFilter.Validation();
+        var species = _animals.GetSpeciesList(pageFilter);
+        return new SpeciesListViewModel(species);
+    }
+}
 
 }
