@@ -10,3 +10,15 @@
 2021-07-22 14:59:45.2923 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
 2021-07-22 15:00:22.5508 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
 2021-07-22 15:00:50.1578 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-22 15:28:25.1161 Info - Zoo.Program: Program started
+2021-07-22 15:33:21.8872 Info - Zoo.Program: Program started
+2021-07-22 15:34:11.6339 Info - Zoo.Program: Program started
+2021-07-22 15:37:08.5944 Info - Zoo.Program: Program started
+2021-07-22 15:38:18.5878 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
+2021-07-22 15:42:35.8764 Info - Zoo.Program: Program started
+2021-07-22 15:42:53.4202 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
+2021-07-22 15:59:30.4864 Info - Zoo.Program: Program started
+2021-07-22 16:04:33.1337 Info - Zoo.Program: Program started
+2021-07-22 16:04:57.9722 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
+2021-07-22 16:11:14.5493 Info - Zoo.Program: Program started
+2021-07-22 16:11:34.6981 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
