@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
-using System.Linq;
+using System;
 using zoo.Repositories;
 using zoo.Request;
-using Zoo.Filters;
 
 namespace zoo.Controllers
 {
@@ -22,37 +21,29 @@ namespace zoo.Controllers
         [HttpGet("/keepers/{id}")]
         public ActionResult<KeeperViewModel> KeeperById([FromRoute] int id)
         {
-            var keeper = new KeeperViewModel();
-            try
+            var keeper = _keepers.GetKeeperById(id);
+
+            if (keeper == null)
             {
-                keeper = _keepers.GetKeeperById(id);
-            }
-            catch
-            {
-                Logger.Error($"There is no animal with Id: {id} in our zoo");
-                return new NotFoundResult();
+                Logger.Error($"There is no keeper with Id: {id} in our zoo");
+                return NotFound();
             }
 
-            Logger.Info($"Getting an animal with {id} id");
+            Logger.Info($"Getting an keeper with {id} id");
             return keeper;
         }
 
         [HttpPost("/keepers/create")]
         public IActionResult AddKeeper(AddKeeperViewModel addKeeperViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                Logger.Error($"Add keeper request is not valid");
-                return BadRequest(ModelState);
-            }
             try
             {
                 var newKeeper = _keepers.AddKeeper(addKeeperViewModel);
                 return RedirectToAction("KeeperById", new { id = newKeeper.Id });
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
 

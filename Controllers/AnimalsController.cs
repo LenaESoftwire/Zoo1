@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NLog;
+using System;
 using System.Linq;
 using zoo.Repositories;
 using zoo.Request;
@@ -24,7 +25,6 @@ namespace zoo.Controllers
         {
             filter.Validation();
             var animals = _animals.GetAnimalsList(filter);
-
             return new AnimalListViewModel(animals);
         }
 
@@ -32,23 +32,16 @@ namespace zoo.Controllers
         public ActionResult<AnimalListViewModel> SearchAnimals([FromQuery] AnimalsSearchRequest filter)
         {
             filter.Validation();
-            if (!ModelState.IsValid)
-            {
-                Logger.Error($"Add animal request is not valid");
-                return BadRequest(ModelState);
-            }
             try
             {
                 var animals = _animals.SearchAnimals(filter);
-
                 return animals.Any() ? new AnimalListViewModel(animals) : new NotFoundResult();
             }
             catch
             {
                 Logger.Error($"There is no such animal in our zoo");
-                return new NotFoundResult();
+                return NotFound();
             }
-
         }
 
         [HttpGet("/animals/{id}")]
@@ -62,7 +55,7 @@ namespace zoo.Controllers
             catch
             {
                 Logger.Error($"There is no animal with Id: {id} in our zoo");
-                return new NotFoundResult();
+                return NotFound();
             }
 
             Logger.Info($"Getting an animal with {id} id");
@@ -72,19 +65,14 @@ namespace zoo.Controllers
         [HttpPost("/animals/create")]
         public IActionResult AddAnimal(AddAnimalViewModel addAnimalViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                Logger.Error($"Add animal request is not valid");
-                return BadRequest(ModelState);
-            }
             try
             {
                 _animals.AddAnimal(addAnimalViewModel);
                 return RedirectToAction("AnimalsList");
             }
-            catch
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message);
             }
         }
 

@@ -65,3 +65,8 @@
 2021-07-23 12:14:53.8839 Info - Zoo.Program: Program started
 2021-07-23 12:15:36.2384 Info - zoo.Controllers.KeepersController: Getting an animal with 20 id
 2021-07-23 12:21:13.8817 Info - Zoo.Program: Program started
+2021-07-23 14:01:48.2382 Info - Zoo.Program: Program started
+2021-07-23 14:03:43.4515 Info - Zoo.Program: Program started
+2021-07-23 14:39:04.6949 Info - Zoo.Program: Program started
+2021-07-23 14:41:04.8009 Error - zoo.Repositories.AnimalsRepo: Animal can't be added as Giraffe enclosure is full
+2021-07-23 14:45:35.6842 Info - Zoo.Program: Program started

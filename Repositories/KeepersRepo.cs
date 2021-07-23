@@ -1,13 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NLog;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using zoo.Request;
 using Zoo;
 using Zoo.DBModels;
-using Zoo.Filters;
 
 namespace zoo.Repositories
 {
@@ -28,53 +25,41 @@ namespace zoo.Repositories
 
         public KeeperViewModel GetKeeperById(int id)
         {
-            return new KeeperViewModel(_context.Keepers
+            var keeper = _context.Keepers
                     .Include(k => k.Enclosures)
                     .ThenInclude(e => e.Animals.Where(a => a.Keeper.Id == id))
                     .ThenInclude(a => a.Species)
                     .Include(k => k.Enclosures)
                     .ThenInclude(e => e.Animals)
                     .ThenInclude(a => a.Keeper)
-                    .Single(k => k.Id == id));
+                    .SingleOrDefault(k => k.Id == id);
+
+            return keeper == null ? null : new KeeperViewModel(keeper);
         }
 
         public Keeper AddKeeper(AddKeeperViewModel addKeeperViewModel)
         {
-            var enclosures = new List<Enclosure>();
-            foreach (var enclosureName in addKeeperViewModel.Enclosures)
+            var enclosures = _context.Enclosures.Where(e => addKeeperViewModel.Enclosures.Contains(e.Name)).ToList();
+
+            if (enclosures.Count != addKeeperViewModel.Enclosures.Count)
             {
-                try
-                {
-                    var enclosure = _context.Enclosures.Single(e => enclosureName == e.Name);
-                    enclosures.Add(enclosure);
-                }
-                catch
-                {
-                    Logger.Error($"Enclosure {enclosureName} is not found. It must be an integer between 0 and 4");
-                    throw new Exception($"Enclosure {enclosureName} is not found. It must be an integer between 0 and 4");
-                }
+                var falseEnclosureNames = addKeeperViewModel.Enclosures.Where(eName => !enclosures.Any(e => e.Name == eName));
+                Logger.Error($"Enclosure(s) {string.Join(", ", falseEnclosureNames)} not found. It must be an integer between 0 and 4");
+                throw new Exception($"Enclosure(s) {string.Join(", ", falseEnclosureNames)} not found. It must be an integer between 0 and 4");
             }
 
-            var animals = new List<Animal>();
-            foreach (var id in addKeeperViewModel.AnimalIds)
+            var animals = _context.Animals
+                .Include(a => a.Enclosure)
+                .Where(a => addKeeperViewModel.AnimalIds.Contains(a.Id)).ToList();
+            if (animals.Count != addKeeperViewModel.AnimalIds.Count)
             {
-                try
-                {
-                    var animal = _context.Animals
-                        .Include(a => a.Enclosure)
-                        .Single(a => id == a.Id);
-                    animals.Add(animal);
-                    if (!enclosures.Contains(animal.Enclosure))
-                    {
-                        enclosures.Add(animal.Enclosure);
-                    }
-                }
-                catch
-                {
-                    Logger.Error($"Animal with id {id} is not found");
-                    throw new Exception($"Animal with id {id} is not found");
-                }
+                var falseAnimals = addKeeperViewModel.AnimalIds.Where(id => !animals.Any(a => a.Id == id));
+                Logger.Error($"Animal(s) {string.Join(", ", falseAnimals)} not found");
+                throw new Exception($"Animal(s) {string.Join(", ", falseAnimals)} not found");
             }
+
+            enclosures.AddRange(animals.Select(a => a.Enclosure).Where(e => !enclosures.Any(e1 => e == e1)));
+
             var newKeeper = new Keeper()
             {
                 Name = addKeeperViewModel.Name,

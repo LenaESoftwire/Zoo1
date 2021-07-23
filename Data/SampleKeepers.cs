@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using zoo.DBModels.Enums;
 using Zoo.DBModels;
 
 namespace Zoo.Data

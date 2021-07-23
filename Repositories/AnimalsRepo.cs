@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using NLog;
 using System;
 using System.Collections.Generic;
@@ -59,11 +58,10 @@ namespace zoo.Repositories
             var classification = addAnimalViewModel.Classification;
             var enclosure = _context.Enclosures
                 .Include(enclosure => enclosure.Animals)
-                //.Include(a => a.Keeper)
                 .SingleOrDefault(enclosure => enclosure.Name == addAnimalViewModel.Enclosure);
 
-            if (addAnimalViewModel.Dob>DateTime.Now || addAnimalViewModel.DateAcquired>DateTime.Now 
-                || addAnimalViewModel.DateAcquired<addAnimalViewModel.Dob)
+            if (addAnimalViewModel.Dob > DateTime.Now || addAnimalViewModel.DateAcquired > DateTime.Now
+                || addAnimalViewModel.DateAcquired < addAnimalViewModel.Dob)
             {
                 Logger.Error("Date of birth and date acquired must not be later than today, date of birth must not be later than date acquired");
                 throw new Exception("Date of birth and date acquired must not be later than today, date of birth must not be later than date acquired");
@@ -81,20 +79,20 @@ namespace zoo.Repositories
                    Name = addAnimalViewModel.Species,
                    Classification = addAnimalViewModel.Classification
                };
-            var keeper = 
+            var keeper =
                 _context.Keepers
                 .Include(k => k.Enclosures)
                 .SingleOrDefault(keeper => keeper.Name.ToLower() == addAnimalViewModel.KeeperName.ToLower())
-      
+
                ?? new Keeper()
                {
                    Name = addAnimalViewModel.KeeperName,
                    Enclosures = new List<Enclosure>(),
-                   Animals = new List<Animal>()          
+                   Animals = new List<Animal>()
                };
             keeper.Enclosures.Add(enclosure);
 
-        var newAnimal = new Animal()
+            var newAnimal = new Animal()
             {
                 Species = species,
                 Name = addAnimalViewModel.Name,
