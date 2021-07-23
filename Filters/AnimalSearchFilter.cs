@@ -15,5 +15,6 @@ namespace Zoo.Filters
         public string? OrderBy { get; set; }
         [Range(0, 4, ErrorMessage = "Enclouser must be between 0 and 4")]
         public int? Enclosure { get; set; }
+        public int? KeeperId { get; set; }
     }    
 }

@@ -130,7 +130,7 @@ namespace zoo.Repositories
                .Where(a => search.Classification == null || search.Classification == (int)a.Species.Classification)
                .Where(a => search.Age == null || search.Age == DateTime.Today.Year - a.Dob.Year)
                .Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date)
-               //.Where(a => search.DateAcquired == null || search.DateAcquired.Value.Date == a.DateAcquired.Date)
+               .Where(a => search.KeeperId == null || search.KeeperId == a.Keeper.Id)
                .Where(a => search.Enclosure == null || search.Enclosure == (int)a.Enclosure.Name);
 
             query = orderBy switch
@@ -140,6 +140,7 @@ namespace zoo.Repositories
                 "name" => query.OrderBy(a => a.Name),
                 "dateacquired" => query.OrderBy(a => a.DateAcquired),
                 "enclosure" => query.OrderBy(a => a.Enclosure.Name),
+                "keeper" => query.OrderBy(a => a.Keeper.Id),
                 _ => query.OrderBy(a => a.Species.Name),
             };
             return query
