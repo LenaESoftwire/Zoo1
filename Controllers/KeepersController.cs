@@ -37,24 +37,24 @@ namespace zoo.Controllers
             return keeper;
         }
 
-        //[HttpPost("/animals/create")]
-        //public IActionResult AddAnimal(AddAnimalViewModel addAnimalViewModel)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        Logger.Error($"Add animal request is not valid");
-        //        return BadRequest(ModelState);
-        //    }
-        //    try
-        //    {
-        //        _keepers.AddAnimal(addAnimalViewModel);
-        //        return RedirectToAction("AnimalsList");
-        //    }
-        //    catch
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
+        [HttpPost("/keepers/create")]
+        public IActionResult AddKeeper(AddKeeperViewModel addKeeperViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                Logger.Error($"Add keeper request is not valid");
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var newKeeper = _keepers.AddKeeper(addKeeperViewModel);
+                return RedirectToAction("KeeperById", new { id = newKeeper.Id });
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
 
     }
 }

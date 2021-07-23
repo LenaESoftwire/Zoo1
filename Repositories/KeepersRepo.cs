@@ -14,7 +14,7 @@ namespace zoo.Repositories
     public interface IKeepersRepo
     {
         KeeperViewModel GetKeeperById(int id);
-        //void AddAnimal(AddAnimalViewModel addAnimalViewModel);
+        Keeper AddKeeper(AddKeeperViewModel addKeeperViewModel);
     }
 
     public class KeepersRepo : IKeepersRepo
@@ -25,7 +25,6 @@ namespace zoo.Repositories
         {
             _context = context;
         }
-
 
         public KeeperViewModel GetKeeperById(int id)
         {
@@ -39,46 +38,52 @@ namespace zoo.Repositories
                     .Single(k => k.Id == id));
         }
 
-        //public void AddAnimal(AddAnimalViewModel addAnimalViewModel)
-        //{
-        //    var classification = addAnimalViewModel.Classification;
-        //    var enclosure = _context.Enclosures
-        //        .Include(enclosure => enclosure.Animals)
-        //        //.Include(a => a.Keeper)
-        //        .SingleOrDefault(enclosure => enclosure.Name == addAnimalViewModel.Enclosure);
+        public Keeper AddKeeper(AddKeeperViewModel addKeeperViewModel)
+        {
+            var enclosures = new List<Enclosure>();
+            foreach (var enclosureName in addKeeperViewModel.Enclosures)
+            {
+                try
+                {
+                    var enclosure = _context.Enclosures.Single(e => enclosureName == e.Name);
+                    enclosures.Add(enclosure);
+                }
+                catch
+                {
+                    Logger.Error($"Enclosure {enclosureName} is not found. It must be an integer between 0 and 4");
+                    throw new Exception($"Enclosure {enclosureName} is not found. It must be an integer between 0 and 4");
+                }
+            }
 
-        //    if (addAnimalViewModel.Dob>DateTime.Now || addAnimalViewModel.DateAcquired>DateTime.Now 
-        //        || addAnimalViewModel.DateAcquired<addAnimalViewModel.Dob)
-        //    {
-        //        Logger.Error("Date of birth and date acquired must not be later than today, date of birth must not be later than date acquired");
-        //        throw new Exception("Date of birth and date acquired must not be later than today, date of birth must not be later than date acquired");
-        //    }
-
-        //    if (enclosure.Capacity <= enclosure.Animals.Count)
-        //    {
-        //        Logger.Error($"Animal can't be added as {enclosure.Name} enclosure is full");
-        //        throw new Exception($"Animal can't be added as {enclosure.Name} enclosure is full");
-        //    }
-
-        //    var species = _context.Species.SingleOrDefault(species => species.Name.ToLower() == addAnimalViewModel.Species.ToLower())
-        //       ?? new Species()
-        //       {
-        //           Name = addAnimalViewModel.Species,
-        //           Classification = addAnimalViewModel.Classification
-        //       };
-        //    var newAnimal = new Animal()
-        //    {
-        //        Species = species,
-        //        Name = addAnimalViewModel.Name,
-        //        Sex = addAnimalViewModel.Sex,
-        //        Dob = addAnimalViewModel.Dob,
-        //        DateAcquired = addAnimalViewModel.DateAcquired,
-        //        Enclosure = enclosure
-        //    };
-        //    _context.Animals.Add(newAnimal);
-        //    _context.SaveChanges();
-        //}
-
-        
+            var animals = new List<Animal>();
+            foreach (var id in addKeeperViewModel.AnimalIds)
+            {
+                try
+                {
+                    var animal = _context.Animals
+                        .Include(a => a.Enclosure)
+                        .Single(a => id == a.Id);
+                    animals.Add(animal);
+                    if (!enclosures.Contains(animal.Enclosure))
+                    {
+                        enclosures.Add(animal.Enclosure);
+                    }
+                }
+                catch
+                {
+                    Logger.Error($"Animal with id {id} is not found");
+                    throw new Exception($"Animal with id {id} is not found");
+                }
+            }
+            var newKeeper = new Keeper()
+            {
+                Name = addKeeperViewModel.Name,
+                Enclosures = enclosures,
+                Animals = animals
+            };
+            _context.Keepers.Add(newKeeper);
+            _context.SaveChanges();
+            return newKeeper;
+        }
     }
 }

@@ -45,3 +45,22 @@
 2021-07-23 10:52:09.4777 Info - zoo.Controllers.KeepersController: Getting an animal with 5 id
 2021-07-23 10:52:59.6985 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
 2021-07-23 10:53:12.6044 Info - zoo.Controllers.KeepersController: Getting an animal with 11 id
+2021-07-23 11:36:48.3672 Info - Zoo.Program: Program started
+2021-07-23 11:43:35.8921 Info - Zoo.Program: Program started
+2021-07-23 11:44:46.7209 Info - zoo.Controllers.KeepersController: Getting an animal with 12 id
+2021-07-23 11:47:47.5346 Info - zoo.Controllers.KeepersController: Getting an animal with 13 id
+2021-07-23 11:51:47.9795 Info - Zoo.Program: Program started
+2021-07-23 11:54:12.9132 Info - Zoo.Program: Program started
+2021-07-23 11:56:54.1363 Info - zoo.Controllers.KeepersController: Getting an animal with 14 id
+2021-07-23 11:56:59.9943 Info - zoo.Controllers.KeepersController: Getting an animal with 16 id
+2021-07-23 12:00:53.3920 Info - zoo.Controllers.KeepersController: Getting an animal with 17 id
+2021-07-23 12:03:45.2477 Info - zoo.Controllers.KeepersController: Getting an animal with 18 id
+2021-07-23 12:04:17.4114 Info - zoo.Controllers.KeepersController: Getting an animal with 12 id
+2021-07-23 12:04:23.2067 Info - zoo.Controllers.KeepersController: Getting an animal with 13 id
+2021-07-23 12:06:06.5737 Error - zoo.Repositories.KeepersRepo: Enclosure 5 is not found. It must be an integer between 0 and 4
+2021-07-23 12:06:24.1538 Error - zoo.Repositories.KeepersRepo: Animal with id 120 is not found
+2021-07-23 12:07:30.0501 Info - zoo.Controllers.KeepersController: Getting an animal with 19 id
+2021-07-23 12:09:31.8614 Info - zoo.Controllers.KeepersController: Getting an animal with 14 id
+2021-07-23 12:09:45.7519 Info - zoo.Controllers.KeepersController: Getting an animal with 13 id
+2021-07-23 12:14:53.8839 Info - Zoo.Program: Program started
+2021-07-23 12:15:36.2384 Info - zoo.Controllers.KeepersController: Getting an animal with 20 id
