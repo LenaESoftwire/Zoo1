@@ -81,14 +81,28 @@ namespace zoo.Repositories
                    Name = addAnimalViewModel.Species,
                    Classification = addAnimalViewModel.Classification
                };
-            var newAnimal = new Animal()
+            var keeper = 
+                _context.Keepers
+                .Include(k => k.Enclosures)
+                .SingleOrDefault(keeper => keeper.Name.ToLower() == addAnimalViewModel.KeeperName.ToLower())
+      
+               ?? new Keeper()
+               {
+                   Name = addAnimalViewModel.KeeperName,
+                   Enclosures = new List<Enclosure>(),
+                   Animals = new List<Animal>()          
+               };
+            keeper.Enclosures.Add(enclosure);
+
+        var newAnimal = new Animal()
             {
                 Species = species,
                 Name = addAnimalViewModel.Name,
                 Sex = addAnimalViewModel.Sex,
                 Dob = addAnimalViewModel.Dob,
                 DateAcquired = addAnimalViewModel.DateAcquired,
-                Enclosure = enclosure
+                Enclosure = enclosure,
+                Keeper = keeper
             };
             _context.Animals.Add(newAnimal);
             _context.SaveChanges();

@@ -32,5 +32,8 @@ namespace zoo.Request
         [Range(0, 4, ErrorMessage = "Enclosure must be between 0 and 4")]
         [Display(Name = "Enclosure")]
         public EnclosureName Enclosure { get; set; }
+        [Required(ErrorMessage = "Keeper is required")]
+        [Display(Name = "Keeper")]
+        public string KeeperName { get; set; }
     }
 }

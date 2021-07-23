@@ -22,3 +22,26 @@
 2021-07-22 16:04:57.9722 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
 2021-07-22 16:11:14.5493 Info - Zoo.Program: Program started
 2021-07-22 16:11:34.6981 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
+2021-07-23 09:41:48.9887 Info - Zoo.Program: Program started
+2021-07-23 09:44:10.5136 Error - zoo.Repositories.AnimalsRepo: Animal can't be added as Lion enclosure is full
+2021-07-23 09:44:52.4393 Error - zoo.Repositories.AnimalsRepo: Animal can't be added as Lion enclosure is full
+2021-07-23 09:48:16.9791 Error - zoo.Repositories.AnimalsRepo: Animal can't be added as Lion enclosure is full
+2021-07-23 09:48:44.6550 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-23 10:34:25.5462 Info - Zoo.Program: Program started
+2021-07-23 10:35:30.7558 Error - zoo.Repositories.AnimalsRepo: Animal can't be added as Giraffe enclosure is full
+2021-07-23 10:36:23.8184 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-23 10:37:18.5168 Info - zoo.Controllers.KeepersController: Getting an animal with 10 id
+2021-07-23 10:37:32.1039 Error - zoo.Controllers.KeepersController: There is no animal with Id: 11 in our zoo
+2021-07-23 10:37:47.2638 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
+2021-07-23 10:40:14.9417 Error - zoo.Controllers.KeepersController: There is no animal with Id: 11 in our zoo
+2021-07-23 10:45:33.3431 Info - Zoo.Program: Program started
+2021-07-23 10:49:30.2888 Info - Zoo.Program: Program started
+2021-07-23 10:50:29.8213 Error - zoo.Repositories.AnimalsRepo: Date of birth and date acquired must not be later than today, date of birth must not be later than date acquired
+2021-07-23 10:51:04.7304 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-23 10:51:24.4782 Info - zoo.Controllers.KeepersController: Getting an animal with 1 id
+2021-07-23 10:51:45.6755 Info - zoo.Controllers.KeepersController: Getting an animal with 2 id
+2021-07-23 10:51:55.2282 Info - zoo.Controllers.KeepersController: Getting an animal with 3 id
+2021-07-23 10:52:05.1738 Info - zoo.Controllers.KeepersController: Getting an animal with 4 id
+2021-07-23 10:52:09.4777 Info - zoo.Controllers.KeepersController: Getting an animal with 5 id
+2021-07-23 10:52:59.6985 Info - zoo.Repositories.AnimalsRepo: Getting a list of animals ordered by Id
+2021-07-23 10:53:12.6044 Info - zoo.Controllers.KeepersController: Getting an animal with 11 id
